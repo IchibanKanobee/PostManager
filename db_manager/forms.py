@@ -40,7 +40,7 @@ class RecordForm(forms.ModelForm):
 class AccountForm(forms.ModelForm):
     class Meta:
         model = Account
-        fields = ['platform', 'name', 'suffix', 'creation_date']
+        fields = ['platform', 'name', 'suffix', 'email', 'creation_date']
 
 
 class PostForm(forms.ModelForm):
