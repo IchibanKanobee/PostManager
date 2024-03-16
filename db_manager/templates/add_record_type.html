@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block content %}
+
+<form method="POST" action="{% url 'add_record_type' %}">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="recordTypeLabel" class="form-label">Record Type</label>
+    <input type="text" class="form-control" id="inputRecordType" name="type" />
+  </div>
+  <button type="submit" class="btn btn-primary">Add</button>
+</form>
+{% endblock%}

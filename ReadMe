@@ -1,0 +1,62 @@
+Remember, when you do python manage.py makemigrations (or migrate), you have to do it inside app container, so do thid first:
+docker exec -it af5a7643dcab /bin/bash
+to get inside of the container, and then do your migrations
+
+How to transfer to Windows: Make a copy of the directory, and db file will not be copied because of the permissions. It's ok, that's what we want. Zip up the copied directory and copy to google drive.
+On widows, download the directory, start Docker Desktop and run "docker compose up --build". Create migrations in Docker Desktop.
+
+https://stackoverflow.com/questions/42086613/cannot-remove-all-containers-in-a-row
+sudo docker rm -f $(sudo docker ps -q)
+To stop container starting automatically when docker starts use:
+docker update --restart=no container_name
+
+
+
+docker compose down --remove-orphans
+docker-compose up --force-recreate
+
+------------------------------------------------------------------------------------
+Prevent restart
+https://stackoverflow.com/questions/41036273/disable-autostart-of-docker-compose-project
+
+Today I had the same issue that all containers are started when I boot my dev laptop, as restart: always was set in the .yml files.
+
+As I don't want to touch the .yml files, I just found out (thx Bobby) how to alter this setting by:
+
+docker update --restart=no <MY-CONTAINER-ID>
+
+
+Try with docker-compose down instead of docker-compose stop
+
+down
+
+Stops containers and removes containers, networks, volumes, and images created by up. Networks and volumes defined as external are never removed.
+
+stop
+
+Stops running containers
+------------------------------------------------------------------------------------
+
+Datepicker bootstrap5
+https://stackoverflow.com/questions/68662850/datepicker-bootstrap-5
+
+<label for="startDate">Start</label>
+<input id="startDate" class="form-control" type="date" />
+------------------------------------------------------------------------------------
+
+The following command (which removes all unused containers, networks, images, and optionally, volumes) solve my problem:
+
+docker system prune
+--------------------------------------------------------------------------------------
+
+If service db not found, then "docker compos down -v" and restart sometimes help
+
+--------------------------------------------------------------------------------------
+How to work with a container interactively
+You can enter a running container with:
+docker exec -it my_new_container /bin/bash
+
+If the container is not running, then:
+docker run -it my_new_container /bin/bash
+
+

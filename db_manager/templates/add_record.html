@@ -1,0 +1,93 @@
+{% extends 'base.html' %} {% block content %}
+
+<form
+  method="POST"
+  enctype="multipart/form-data"
+  action="{% url 'add_record' %}"
+  id="addRecordForm"
+>
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="recordLabel" class="form-label">Add Record</label>
+    <div class="form-group row">
+      <input type="file" id="inputFilename" />
+    </div>
+    <input type="hidden" name="hiddenName" id="hiddenName" value="" />
+    <div class="form-group row">
+      <label for="inputTags" class="col-sm-2 col-form-label">Tags</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="inputTags" name="tags" />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputType" class="col-sm-2 col-form-label">Type</label>
+      <div class="col-sm-10">
+        <select id="inputType" name="type">
+          {% for type in types %}
+          <option value="{{ type.id }}">{{ type.type }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputSourcePlatform" class="col-sm-2 col-form-label"
+        >Source Platform</label
+      >
+      <div class="col-sm-10">
+        <select id="inputSourcePlatform" name="source_platform">
+          {% for platform in platforms %}
+          <option value="{{ platform.id }}">{{ platform.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputAuthor" class="col-sm-2 col-form-label">Author</label>
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="inputAuthor"
+          name="author"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputURL" class="col-sm-2 col-form-label">URL</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="inputURL" name="url" />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputEdited" class="col-sm-2 col-form-label">Edited</label>
+      <div class="col-sm-10">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="inputEdited"
+          name="edited"
+        />
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Add</button>
+</form>
+
+<script>
+  document
+    .getElementById("addRecordForm")
+    .addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent form submission
+
+      var fileInput = document.getElementById("inputFilename");
+      var fileName = fileInput.files[0].name;
+
+      var hiddenName = document.getElementById("hiddenName");
+      hiddenName.value = fileName;
+
+      //alert("Selected File: " + fileName);
+      document.getElementById("addRecordForm").submit();
+    });
+</script>
+
+{% endblock%}

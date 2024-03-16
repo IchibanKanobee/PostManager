@@ -1,0 +1,34 @@
+version: "3.8"
+services:
+  db:
+    image: postgres
+    volumes:
+      - .data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=Assets
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    container_name: postgres_container
+    #restart: always
+    ports:
+      - "5432:5432"
+  app:
+    build: .
+    volumes:
+      - .:/django
+    ports:
+      - 8000:8000
+    image: app:django
+    container_name: django_container
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - db
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    #restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5050:80"

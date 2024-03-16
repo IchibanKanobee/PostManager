@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block content %}
+
+<form method="POST" action="{% url 'add_platform' %}">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Add platform</label>
+    <input type="text" class="form-control" id="inputPlatform" name="name" />
+  </div>
+  <button type="submit" class="btn btn-primary">Add</button>
+</form>
+{% endblock%}

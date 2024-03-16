@@ -1,0 +1,7 @@
+*.pyc
+*.pkl
+*.json
+.data/
+venv/
+migrations/
+db/

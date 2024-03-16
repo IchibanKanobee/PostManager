@@ -1,0 +1,73 @@
+{% extends 'base.html' %} {% block content %}
+
+<form
+  method="POST"
+  enctype="multipart/form-data"
+  action="{% url 'add_post' %}"
+  id="addPostForm"
+>
+  {% csrf_token %}
+
+  <div class="form-group row">
+    <label for="inputAccount" class="col-sm-2 col-form-label">Account</label>
+    <div class="col-sm-10">
+      <select id="inputAccount" name="account">
+        {% for account in accounts %}
+        <option value="{{ account.id }}">
+          {{ account.id }}-{{ account.name }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="inputRecord" class="col-sm-2 col-form-label">Record</label>
+    <div class="col-sm-10">
+      <select id="inputRecord" name="record">
+        {% for record in records %}
+        <option value="{{ record.id }}">{{ record.file_name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="annotation" class="col-sm-2 col-form-label">Annotation</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" rows="5"></textarea>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="creation_date" class="col-sm-2 col-form-label"
+      >Creation Date</label
+    >
+    <div class="col-sm-10">
+      <input
+        id="creation_date"
+        class="form-control"
+        type="date"
+        name="creation_date"
+      />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="platform_specific_reference" class="col-sm-2 col-form-label"
+      >Platform Specific Reference</label
+    >
+    <div class="col-sm-10">
+      <input
+        type="text"
+        class="form-control"
+        id="inputPlatformSpecificReference"
+        name="platform_specific_reference"
+      />
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Add</button>
+</form>
+
+{% endblock%}
