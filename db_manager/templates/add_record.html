@@ -1,5 +1,4 @@
-{% extends 'base.html' %} {% block content %}
-
+{% extends 'base.html' %} {% load static %} {% block content %}
 <form
   method="POST"
   enctype="multipart/form-data"
@@ -12,6 +11,15 @@
     <div class="form-group row">
       <input type="file" id="inputFilename" />
     </div>
+    <div>
+      <img
+        id="preview_image"
+        src="{% static '/media/logo.png' %}"
+        width="256"
+        height="256"
+      />
+    </div>
+
     <input type="hidden" name="hiddenName" id="hiddenName" value="" />
     <div class="form-group row">
       <label for="inputTags" class="col-sm-2 col-form-label">Tags</label>

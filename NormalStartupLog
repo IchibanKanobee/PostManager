@@ -1,0 +1,56 @@
+Building 0.4s (9/9) FINISHED                                                                               docker:default
+ => [app internal] load build definition from Dockerfile                                                                 0.0s
+ => => transferring dockerfile: 183B                                                                                     0.0s
+ => [app internal] load metadata for docker.io/library/python:3.10-slim-buster                                           0.3s
+ => [app internal] load .dockerignore                                                                                    0.0s
+ => => transferring context: 2B                                                                                          0.0s
+ => [app 1/4] FROM docker.io/library/python:3.10-slim-buster@sha256:37aa274c2d001f09b14828450d903c55f821c90f225fdfdd80c  0.0s
+ => [app internal] load build context                                                                                    0.0s
+ => => transferring context: 38B                                                                                         0.0s
+ => CACHED [app 2/4] WORKDIR /django                                                                                     0.0s
+ => CACHED [app 3/4] COPY requirements.txt requirements.txt                                                              0.0s
+ => CACHED [app 4/4] RUN pip3 install -r requirements.txt                                                                0.0s
+ => [app] exporting to image                                                                                             0.0s
+ => => exporting layers                                                                                                  0.0s
+ => => writing image sha256:b54861180bfc1f32a731715bc760e57c5614e314039991e3678a6d217f5096f3                             0.0s
+ => => naming to docker.io/library/app:django                                                                            0.0s
+[+] Running 3/0
+ ✔ Container pgadmin_container   Created                                                                                 0.0s 
+ ✔ Container postgres_container  Created                                                                                 0.0s 
+ ✔ Container django_container    Created                                                                                 0.0s 
+Attaching to django_container, pgadmin_container, postgres_container
+postgres_container  | 
+postgres_container  | PostgreSQL Database directory appears to contain a database; Skipping initialization
+postgres_container  | 
+postgres_container  | 2024-04-16 14:32:10.523 UTC [1] LOG:  starting PostgreSQL 16.2 (Debian 16.2-1.pgdg120+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+postgres_container  | 2024-04-16 14:32:10.523 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres_container  | 2024-04-16 14:32:10.523 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres_container  | 2024-04-16 14:32:10.558 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+pgadmin_container   | postfix/postlog: starting the Postfix mail system
+postgres_container  | 2024-04-16 14:32:10.624 UTC [28] LOG:  database system was shut down at 2024-04-15 22:38:58 UTC
+postgres_container  | 2024-04-16 14:32:10.707 UTC [1] LOG:  database system is ready to accept connections
+django_container    | Watching for file changes with StatReloader
+django_container    | Performing system checks...
+django_container    | 
+django_container    | System check identified no issues (0 silenced).
+django_container    | April 16, 2024 - 14:32:11
+django_container    | Django version 4.2.11, using settings 'posts.settings'
+django_container    | Starting development server at http://0.0.0.0:8000/
+django_container    | Quit the server with CONTROL-C.
+django_container    | 
+pgadmin_container   | [2024-04-16 14:32:14 +0000] [1] [INFO] Starting gunicorn 20.1.0
+pgadmin_container   | [2024-04-16 14:32:14 +0000] [1] [INFO] Listening at: http://[::]:80 (1)
+pgadmin_container   | [2024-04-16 14:32:14 +0000] [1] [INFO] Using worker: gthread
+pgadmin_container   | [2024-04-16 14:32:14 +0000] [82] [INFO] Booting worker with pid: 82
+
+
+--------------------------------------------------------
+Checking running containers
+
+docker ps
+
+CONTAINER ID   IMAGE            COMMAND                  CREATED        STATUS         PORTS                                            NAMES
+0085851e486b   app:django       "python manage.py ru…"   23 hours ago   Up 2 minutes   0.0.0.0:8000->8000/tcp, :::8000->8000/tcp        django_container
+55348872677e   postgres         "docker-entrypoint.s…"   4 weeks ago    Up 2 minutes   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp        postgres_container
+112283b593b1   dpage/pgadmin4   "/entrypoint.sh"         4 weeks ago    Up 2 minutes   443/tcp, 0.0.0.0:5050->80/tcp, :::5050->80/tcp   pgadmin_container
+

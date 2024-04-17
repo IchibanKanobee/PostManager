@@ -54,9 +54,12 @@ If service db not found, then "docker compos down -v" and restart sometimes help
 --------------------------------------------------------------------------------------
 How to work with a container interactively
 You can enter a running container with:
+
 docker exec -it django_container /bin/bash
 
+
 If the container is not running, then:
+
 docker run -it django_container /bin/bash
 
 
