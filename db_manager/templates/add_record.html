@@ -82,6 +82,33 @@
 </form>
 
 <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const inputFilename = document.getElementById("inputFilename");
+    const previewImage = document.getElementById("preview_image");
+
+    inputFilename.addEventListener("change", function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const fileType = file.type.split("/")[0];
+          if (fileType === "image") {
+            previewImage.src = e.target.result;
+          } else if (fileType === "video") {
+            previewImage.src = "";
+            const video = document.createElement("video");
+            video.src = e.target.result;
+            video.width = 256;
+            video.height = 256;
+            video.controls = true;
+            previewImage.parentNode.replaceChild(video, previewImage);
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  });
+
   document
     .getElementById("addRecordForm")
     .addEventListener("submit", function (event) {
