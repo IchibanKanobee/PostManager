@@ -20,7 +20,6 @@
       />
     </div>
 
-    <input type="hidden" name="hiddenName" id="hiddenName" value="" />
     <div class="form-group row">
       <label for="inputTags" class="col-sm-2 col-form-label">Tags</label>
       <div class="col-sm-10">
@@ -78,13 +77,16 @@
       </div>
     </div>
   </div>
-  <button type="submit" class="btn btn-primary">Add</button>
+  <button type="submit" id="submitBtn" class="btn btn-primary">Add</button>
 </form>
-
+{% endblock content %} {% block scripts %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const inputFilename = document.getElementById("inputFilename");
     const previewImage = document.getElementById("preview_image");
+
+    const form = document.getElementById("addRecordForm");
+    const submitBtn = document.getElementById("submitBtn");
 
     inputFilename.addEventListener("change", function () {
       const file = this.files[0];
@@ -107,22 +109,49 @@
         reader.readAsDataURL(file);
       }
     });
-  });
 
-  document
-    .getElementById("addRecordForm")
-    .addEventListener("submit", function (event) {
-      event.preventDefault(); // Prevent form submission
+    /*
+    form
+      .addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent form submission
 
-      var fileInput = document.getElementById("inputFilename");
-      var fileName = fileInput.files[0].name;
+        var fileInput = document.getElementById("inputFilename");
+        var fileName = fileInput.files[0].name;
 
-      var hiddenName = document.getElementById("hiddenName");
-      hiddenName.value = fileName;
+        var hiddenName = document.getElementById("hiddenName");
+        hiddenName.value = fileName;
 
-      //alert("Selected File: " + fileName);
-      document.getElementById("addRecordForm").submit();
+        //alert("Selected File: " + fileName);
+        document.getElementById("addRecordForm").submit();
+      });
+  */
+    form.addEventListener("submit", function (event) {
+      const file = inputFilename.files[0];
+      console.log("called submit");
+      if (file) {
+        // Create a hidden input field for the file name
+        console.log("called submit continuation");
+        const fileNameInput = document.createElement("input");
+        fileNameInput.type = "hidden";
+        fileNameInput.name = "fileName";
+        fileNameInput.value = file.name;
+        form.appendChild(fileNameInput);
+        console.log(fileNameInput);
+
+        // Create a hidden input field for the thumbnail image
+        const thumbnailInput = document.createElement("input");
+        thumbnailInput.type = "hidden";
+        thumbnailInput.name = "thumbnail";
+        thumbnailInput.value = previewImage.src;
+        form.appendChild(thumbnailInput);
+        console.log(thumbnailInput);
+      }
     });
-</script>
 
-{% endblock%}
+    // Manually trigger form submission when submit button is clicked
+    submitBtn.addEventListener("click", function () {
+      form.submit();
+    });
+  });
+</script>
+{% endblock scripts %}

@@ -32,7 +32,21 @@ def add_record(request):
     types = RecordType.objects.all()
     if request.method == "POST":
         #Get the file_name from the hidden field in html and store it in the model
-        file_name = request.POST.get('hiddenName')
+#        file_name = request.POST.get('hiddenName')
+        
+        # Get the file object from the request
+        file = request.FILES.get('inputFilename')
+        
+        # Get the file name from the request.POST dictionary
+        file_name = request.POST.get('fileName')
+        
+        # Get the thumbnail image URL from the request.POST dictionary
+        thumbnail_url = request.POST.get('thumbnail')
+
+#        print(file)
+        print(file_name)
+#        print(thumbnail_url)
+       
         form = RecordForm(request.POST, request.FILES)
         model_instance = form.save(commit=False)
         model_instance.file_name = file_name
