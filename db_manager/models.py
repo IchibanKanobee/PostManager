@@ -40,6 +40,7 @@ class Record(models.Model):
     author = models.CharField(blank=True)
     url = models.URLField(blank=True)
     edited = models.BooleanField(default=False)
+    thumbnail = models.URLField(blank=True)
     
 
 class Account(models.Model):

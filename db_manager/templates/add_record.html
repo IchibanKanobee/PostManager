@@ -80,6 +80,7 @@
   <button type="submit" id="submitBtn" class="btn btn-primary">Add</button>
 </form>
 {% endblock content %} {% block scripts %}
+
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const inputFilename = document.getElementById("inputFilename");
@@ -110,41 +111,23 @@
       }
     });
 
-    /*
-    form
-      .addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent form submission
-
-        var fileInput = document.getElementById("inputFilename");
-        var fileName = fileInput.files[0].name;
-
-        var hiddenName = document.getElementById("hiddenName");
-        hiddenName.value = fileName;
-
-        //alert("Selected File: " + fileName);
-        document.getElementById("addRecordForm").submit();
-      });
-  */
     form.addEventListener("submit", function (event) {
       const file = inputFilename.files[0];
-      console.log("called submit");
       if (file) {
-        // Create a hidden input field for the file name
-        console.log("called submit continuation");
-        const fileNameInput = document.createElement("input");
-        fileNameInput.type = "hidden";
-        fileNameInput.name = "fileName";
-        fileNameInput.value = file.name;
-        form.appendChild(fileNameInput);
-        console.log(fileNameInput);
+        // Convert the image data to Base64
+        const canvas = document.createElement("canvas");
+        canvas.width = 256;
+        canvas.height = 256;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(previewImage, 0, 0, canvas.width, canvas.height);
+        const thumbnailData = canvas.toDataURL("image/jpeg");
 
-        // Create a hidden input field for the thumbnail image
+        // Create a hidden input field for the thumbnail data
         const thumbnailInput = document.createElement("input");
         thumbnailInput.type = "hidden";
         thumbnailInput.name = "thumbnail";
-        thumbnailInput.value = previewImage.src;
+        thumbnailInput.value = thumbnailData;
         form.appendChild(thumbnailInput);
-        console.log(thumbnailInput);
       }
     });
 
@@ -154,4 +137,5 @@
     });
   });
 </script>
+
 {% endblock scripts %}
