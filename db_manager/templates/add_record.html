@@ -85,6 +85,8 @@
   document.addEventListener("DOMContentLoaded", function () {
     const inputFilename = document.getElementById("inputFilename");
     const previewImage = document.getElementById("preview_image");
+    video = "";
+    fileType = "image";
 
     const form = document.getElementById("addRecordForm");
     const submitBtn = document.getElementById("submitBtn");
@@ -94,12 +96,12 @@
       if (file) {
         const reader = new FileReader();
         reader.onload = function (e) {
-          const fileType = file.type.split("/")[0];
+          fileType = file.type.split("/")[0];
           if (fileType === "image") {
             previewImage.src = e.target.result;
           } else if (fileType === "video") {
             previewImage.src = "";
-            const video = document.createElement("video");
+            video = document.createElement("video");
             video.src = e.target.result;
             video.width = 256;
             video.height = 256;
@@ -119,7 +121,11 @@
         canvas.width = 256;
         canvas.height = 256;
         const ctx = canvas.getContext("2d");
-        ctx.drawImage(previewImage, 0, 0, canvas.width, canvas.height);
+        if (fileType === "image") {
+          ctx.drawImage(previewImage, 0, 0, canvas.width, canvas.height);
+        } else if (fileType === "video") {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        }
         const thumbnailData = canvas.toDataURL("image/jpeg");
 
         // Create a hidden input field for the thumbnail data
